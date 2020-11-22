@@ -234,7 +234,7 @@ def check_if_subword(token, model_type, starting=False):
         starting (bool): Should be set ``True`` if this token is the starting token of the overall text.
             This matters because models like RoBERTa does not add "Ġ" to beginning token.
     """
-    avail_models = ["bert", "gpt", "gpt2", "roberta", "bart", "electra", "longformer"]
+    avail_models = ["bert", "gpt", "gpt2", "roberta", "bart", "electra", "longformer", "xlnet"]
     if model_type not in avail_models
         raise ValueError(f"Model type {model_type} is not available. Options are {avail_models}.") 
     if model_type in ["bert", "electra"]
@@ -245,5 +245,5 @@ def check_if_subword(token, model_type, starting=False):
         else:
             return False if token[0] == "Ġ" else True 
     elif model_type == "xlnet":
-
-    return 
+        return False if token[0] == "_" else True 
+    return False

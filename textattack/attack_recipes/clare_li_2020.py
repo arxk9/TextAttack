@@ -101,4 +101,10 @@ class CLARE2020(AttackRecipe):
         #
         search_method = GreedySearch()
 
+<<<<<<< HEAD
         return Attack(goal_function, constraints, transformation, search_method)
+=======
+        print("hi")
+
+        return CLARE2020(goal_function, constraints, transformation, search_method)
+>>>>>>> e8620cdaa74bc1f6b8a2ee3267d95a2474e49b8c
