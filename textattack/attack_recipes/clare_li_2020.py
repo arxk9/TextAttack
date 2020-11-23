@@ -19,8 +19,9 @@ from .attack_recipe import AttackRecipe
 
 
 class CLARE2020(AttackRecipe):
-    """"Contextualized Perturbation for Textual Adversarial Attack" (Li et.
-    al., 2020)
+    """Li, Zhang, Peng, Chen, Brockett, Sun, Dolan.
+
+    "Contextualized Perturbation for Textual Adversarial Attack" (Li et al., 2020)
 
     https://arxiv.org/abs/2009.07502
 
@@ -43,25 +44,28 @@ class CLARE2020(AttackRecipe):
         shared_masked_lm = transformers.AutoModelForCausalLM.from_pretrained(
             "distilroberta-base"
         )
+        shared_tokenizer = transformers.AutoTokenizer.from_pretrained(
+            "distilroberta-base"
+        )
         transformation = CompositeTransformation(
             [
                 WordSwapMaskedLM(
                     method="bae",
                     masked_language_model=shared_masked_lm,
-                    # max_candidates=float("inf"),
-                    max_candidates=5,
+                    tokenizer=shared_tokenizer,
+                    max_candidates=20,
                     min_confidence=5e-4,
                 ),
                 WordInsertionMaskedLM(
                     masked_language_model=shared_masked_lm,
-                    # max_candidates=float("inf"),
-                    max_candidates=5,
+                    tokenizer=shared_tokenizer,
+                    max_candidates=20,
                     min_confidence=5e-4,
                 ),
                 WordMergeMaskedLM(
                     masked_language_model=shared_masked_lm,
-                    # max_candidates=float("inf"),
-                    max_candidates=5,
+                    tokenizer=shared_tokenizer,
+                    max_candidates=20,
                     min_confidence=5e-4,
                 ),
             ]
@@ -101,10 +105,4 @@ class CLARE2020(AttackRecipe):
         #
         search_method = GreedySearch()
 
-<<<<<<< HEAD
         return Attack(goal_function, constraints, transformation, search_method)
-=======
-        print("hi")
-
-        return CLARE2020(goal_function, constraints, transformation, search_method)
->>>>>>> e8620cdaa74bc1f6b8a2ee3267d95a2474e49b8c
